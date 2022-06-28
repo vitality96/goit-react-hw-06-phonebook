@@ -1,26 +1,27 @@
-import { createSlice } from "@reduxjs/toolkit/dist/createSlice";
+import { createSlice } from '@reduxjs/toolkit';
 
-const initialState = {
-    'items': [],
-    'filter': ''
-};
-
-
-const contactsSlice = createSlice({
-    name: 'contacts',
-    initialState,
+export const contactsFilterSlice = createSlice({
+    name: 'filter',
+    initialState: '',
     reducers: {
-        addContact(state, action) {
-            state.items.push(action.payload)
-        },
-        deleteContact(state, action) {
-            state.items = state.items.filter(item => item.id !== action.payload)
-        },
-        changeFilter(state, action) {
-            state.filter = action.payload
+        filterChange(state, action) {
+            return (state = action.payload);
         },
     },
-})
+});
 
-export const { increment, decrement, incrementByAmount } = contactsSlice.actions;
-export default contactsSlice.reducer;
+export const itemsSlice = createSlice({
+    name: 'items ',
+    initialState: [],
+    reducers: {
+        add(state, action) {
+            state.push(action.payload);
+        },
+        remove(state, action) {
+            return state.filter(item => item.id !== action.payload);
+        },
+    },
+});
+
+export const { filterChange } = contactsFilterSlice.actions;
+export const { add, remove } = itemsSlice.actions;
